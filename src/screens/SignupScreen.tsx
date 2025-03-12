@@ -2,9 +2,10 @@ import { Button, SafeAreaView, Text, TextInput } from "react-native";
 import { useState } from "react";
 
 import styles from "../styles/SignupStyle";
-import { Link } from "expo-router";
+import { Link, router } from "expo-router";
 import RegisterUser from "@/src/services/SignupService";
 import UserSignup from "@/src/models/UserSignup";
+import useSessionStore from "@/src/zustand/sessionStore";
 
 export default function SignupScreen() {
 	const [username, setUsername] = useState<string>("");
@@ -14,6 +15,8 @@ export default function SignupScreen() {
 	const [passwordError, setPasswordError] = useState<boolean>(false);
 	const [confirmPasswordError, setConfirmPasswordError] =
 		useState<boolean>(false);
+
+	const signIn = useSessionStore((state) => state.signIn);
 
 	const handleSubmit = async () => {
 		const user: UserSignup = {
@@ -27,6 +30,8 @@ export default function SignupScreen() {
 			setUsernameError(false);
 			setPasswordError(false);
 			setConfirmPasswordError(false);
+			signIn();
+			router.replace("/");
 			return;
 		} else {
 			const elements: string[] = element.split(",");
@@ -40,7 +45,10 @@ export default function SignupScreen() {
 		<SafeAreaView style={styles.container}>
 			<Text style={styles.title}>Signup</Text>
 			<TextInput
-				style={styles.input}
+				style={{
+					...styles.input,
+					borderColor: usernameError ? "red" : "grey"
+				}}
 				placeholder={"Pseudo"}
 				onChangeText={setUsername}
 			/>

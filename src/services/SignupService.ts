@@ -2,7 +2,6 @@ import UserSignup from "@/src/models/UserSignup";
 import User from "@/src/models/User";
 import { GetItemAsync, SetItemAsync } from "@/src/utils/AsyncStorageService";
 import * as Crypto from "expo-crypto";
-import { CryptoDigestAlgorithm } from "expo-crypto";
 
 const RegisterUser = async (user: UserSignup) => {
 	try {
@@ -37,7 +36,7 @@ const RegisterUser = async (user: UserSignup) => {
 		const isUsernameValid: boolean = await CheckUsernameValidity(
 			user.username
 		);
-		if (isUsernameValid) {
+		if (!isUsernameValid) {
 			return {
 				success: false,
 				message: "Ce pseudo est déjà utilisé",
@@ -82,7 +81,7 @@ const InsertUser = async (user: UserSignup) => {
 	try {
 		const userId: string = Crypto.randomUUID();
 		const encryptedPassword: string = await Crypto.digestStringAsync(
-			CryptoDigestAlgorithm.SHA256,
+			Crypto.CryptoDigestAlgorithm.SHA256,
 			user.password!
 		);
 		const dataToInsert = {

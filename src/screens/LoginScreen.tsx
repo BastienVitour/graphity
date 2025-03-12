@@ -4,17 +4,22 @@ import { Button, SafeAreaView, Text, TextInput } from "react-native";
 import useSessionStore from "@/src/zustand/sessionStore";
 import styles from "@/src/styles/SignupStyle";
 import { useState } from "react";
+import LoginUser from "@/src/services/LoginService";
 
 export default function SignIn() {
 	const signIn = useSessionStore((state) => state.signIn);
 
 	const [username, setUsername] = useState<string>("");
 	const [password, setPassword] = useState<string>("");
-	const [passwordError, setPasswordError] = useState<boolean>(false);
 
-	const handleSubmit = () => {
-		if (username.length > 5) {
-			alert("Username already exists!");
+	const handleSubmit = async () => {
+		const result = await LoginUser({ username, password });
+		if (result) {
+			signIn();
+			router.replace("/");
+			return;
+		} else {
+			alert("La connexion a échoué");
 		}
 	};
 
@@ -34,15 +39,6 @@ export default function SignIn() {
 			/>
 			<Button title={"Se connecter"} onPress={handleSubmit} />
 			<Link href={"/signup"}>S'inscrire</Link>
-			<Text
-				onPress={() => {
-					signIn();
-					// Navigate after signing in. You may want to tweak this to ensure sign-in is
-					// successful before navigating.
-					router.replace("/");
-				}}>
-				Sign In
-			</Text>
 		</SafeAreaView>
 	);
 }
