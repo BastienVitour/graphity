@@ -27,7 +27,7 @@ const HomeScreen = () => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const [refreshing, setRefreshing] = useState<boolean>(false);
 	const [searchQuery, setSearchQuery] = useState<string>("");
-	const [debouncedSearchQuery] = useDebounce(searchQuery, 1000);
+	const [debouncedSearchQuery] = useDebounce(searchQuery, 1500);
 	const [mediaType, setMediaType] = useState<"gifs" | "stickers" | "all">(
 		"all"
 	);
@@ -43,36 +43,76 @@ const HomeScreen = () => {
 
 		const currentOffset = shouldRefresh ? 0 : offset;
 
-		let endpoint;
-		if (mediaType === "gifs") {
-			endpoint = query ? SEARCH_GIFS : TRENDING_GIFS;
-		} else if (mediaType === "stickers") {
-			endpoint = query ? SEARCH_STICKERS : TRENDING_STICKERS;
-		} else {
-			endpoint = query ? SEARCH_GIFS : TRENDING_GIFS;
-		}
-
 		try {
-			const response = await axios.get(endpoint, {
-				params: {
-					api_key: API_KEY,
-					limit: pageSize,
-					offset: currentOffset,
-					q: query
+			if (mediaType === "all") {
+				const endpoints = query
+					? [SEARCH_GIFS, SEARCH_STICKERS]
+					: [TRENDING_GIFS, TRENDING_STICKERS];
+
+				const requests = endpoints.map((endpoint) =>
+					axios.get(endpoint, {
+						params: {
+							api_key: API_KEY,
+							limit: pageSize / 2,
+							offset: currentOffset,
+							q: query
+						}
+					})
+				);
+
+				const responses = await Promise.all(requests);
+
+				const combinedMedia = [];
+				for (const response of responses) {
+					const formattedMedia = response.data.data.map(
+						(item: any) => ({
+							...item,
+							gifUrl: item.images.original.url
+						})
+					);
+					combinedMedia.push(...formattedMedia);
 				}
-			});
 
-			const newMedia = response.data.data.map((item: any) => ({
-				...item,
-				gifUrl: item.images.original.url
-			}));
+				const shuffledMedia = combinedMedia.sort(
+					() => Math.random() - 0.5
+				);
 
-			if (shouldRefresh) {
-				setMedia(newMedia);
-				setOffset(pageSize);
+				if (shouldRefresh) {
+					setMedia(shuffledMedia);
+					setOffset(pageSize);
+				} else {
+					setMedia((prevMedia) => [...prevMedia, ...shuffledMedia]);
+					setOffset(currentOffset + pageSize);
+				}
 			} else {
-				setMedia((prevMedia) => [...prevMedia, ...newMedia]);
-				setOffset(currentOffset + pageSize);
+				let endpoint;
+				if (mediaType === "gifs") {
+					endpoint = query ? SEARCH_GIFS : TRENDING_GIFS;
+				} else {
+					endpoint = query ? SEARCH_STICKERS : TRENDING_STICKERS;
+				}
+
+				const response = await axios.get(endpoint, {
+					params: {
+						api_key: API_KEY,
+						limit: pageSize,
+						offset: currentOffset,
+						q: query
+					}
+				});
+
+				const newMedia = response.data.data.map((item: any) => ({
+					...item,
+					gifUrl: item.images.original.url
+				}));
+
+				if (shouldRefresh) {
+					setMedia(newMedia);
+					setOffset(pageSize);
+				} else {
+					setMedia((prevMedia) => [...prevMedia, ...newMedia]);
+					setOffset(currentOffset + pageSize);
+				}
 			}
 		} catch (error) {
 			console.error("Erreur lors de la récupération des médias :", error);
