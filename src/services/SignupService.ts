@@ -43,12 +43,13 @@ const RegisterUser = async (user: UserSignup) => {
 				element: "username"
 			};
 		}
-		const insertResult = await InsertUser(user);
-		if (insertResult) {
+		const { status, data } = await InsertUser(user);
+		if (status) {
 			return {
 				success: true,
 				message: "L'utilisateur a bien été enregistré",
-				element: ""
+				element: "",
+				user: data
 			};
 		} else {
 			return {
@@ -96,8 +97,8 @@ const InsertUser = async (user: UserSignup) => {
 		} else {
 			result = await SetItemAsync("users", [...users, dataToInsert]);
 		}
-		return result;
+		return { status: result, data: dataToInsert };
 	} catch (error) {
-		return false;
+		return { status: false };
 	}
 };

@@ -19,18 +19,19 @@ export default function SignupScreen() {
 	const signIn = useSessionStore((state) => state.signIn);
 
 	const handleSubmit = async () => {
-		const user: UserSignup = {
+		const userToInsert: UserSignup = {
 			username: username,
 			password: password,
 			confirmPassword: confirmPassword
 		};
-		const { success, message, element } = await RegisterUser(user);
+		const { success, message, element, user } =
+			await RegisterUser(userToInsert);
 		alert(message);
 		if (success) {
 			setUsernameError(false);
 			setPasswordError(false);
 			setConfirmPasswordError(false);
-			signIn();
+			signIn(user!.id, user!.username);
 			router.replace("/");
 			return;
 		} else {

@@ -16,22 +16,26 @@ const LoginUser = async ({
 			password === "" ||
 			username === ""
 		) {
-			return false;
+			return { status: false };
 		}
 
 		const users: User[] | null = await GetItemAsync("users");
 		if (users === null || users === undefined || users.length === 0) {
-			return false;
+			return { status: false };
 		}
 		const user = users.find((u) => u.username === username);
-		if (!user) return false;
+		if (!user) return { status: false };
 		const encryptedPassword = await Crypto.digestStringAsync(
 			Crypto.CryptoDigestAlgorithm.SHA256,
 			password
 		);
-		return user.password === encryptedPassword;
+		if (user.password === encryptedPassword) {
+			return { status: true, data: { id: user.id, username: username } };
+		} else {
+			return { status: false };
+		}
 	} catch (error) {
-		return false;
+		return { status: false };
 	}
 };
 

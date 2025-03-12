@@ -2,11 +2,13 @@ import { Button, Text, View } from "react-native";
 import useSessionStore from "@/src/zustand/sessionStore";
 
 export default function Index() {
-	//const { signOut } = useSession();
 	const signOut = useSessionStore((state) => state.signOut);
+	const user = useSessionStore((state) => state.user);
+
 	return (
 		<View
 			style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+			<Text>Bonjour, {user.username}</Text>
 			<Text
 				onPress={() => {
 					// The `app/(app)/_layout.tsx` will redirect to the sign-in screen.

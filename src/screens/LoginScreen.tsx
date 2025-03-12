@@ -13,9 +13,9 @@ export default function SignIn() {
 	const [password, setPassword] = useState<string>("");
 
 	const handleSubmit = async () => {
-		const result = await LoginUser({ username, password });
-		if (result) {
-			signIn();
+		const { status, data } = await LoginUser({ username, password });
+		if (status) {
+			signIn(data!.id, data!.username);
 			router.replace("/");
 			return;
 		} else {
