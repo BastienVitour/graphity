@@ -43,3 +43,4 @@ app-example
 package-lock.json
 bun.lockb
 yarn.lock
+.env
