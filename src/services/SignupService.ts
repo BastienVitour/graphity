@@ -72,6 +72,8 @@ export default RegisterUser;
 const CheckUsernameValidity = async (username: string) => {
 	try {
 		const users: User[] = await GetItemAsync("users");
+		if (users === null || users === undefined || users.length === 0)
+			return true;
 		return !users.find((e) => e.username === username);
 	} catch (error) {
 		return false;

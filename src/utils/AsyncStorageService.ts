@@ -4,6 +4,7 @@ export const GetItemAsync = async (key: string) => {
 	try {
 		const jsonValue: string | null = await AsyncStorage.getItem(key);
 		if (jsonValue === null) return null;
+		alert(jsonValue);
 		return JSON.parse(jsonValue);
 	} catch (error) {
 		alert(`Une erreur est survenue ${error}`);
