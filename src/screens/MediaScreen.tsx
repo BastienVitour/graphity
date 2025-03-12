@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { Image } from "expo-image";
 import { useState, useEffect } from "react";
-import { Link } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 interface Media {
@@ -35,7 +35,12 @@ interface Media {
 	alt_text: string;
 }
 
-export default function MediaInfo(mediaId?: string, apiKey?: string) {
+export default function MediaScreen() {
+	const { id, apiKey } = useLocalSearchParams<{
+		id: string;
+		apiKey: string;
+	}>();
+
 	const [modalVisible, setModalVisible] = useState(false);
 	const [media, setMedia] = useState<Media | null>(null);
 
@@ -44,7 +49,7 @@ export default function MediaInfo(mediaId?: string, apiKey?: string) {
 		(async () => {
 			let response: any;
 			await fetch(
-				`https://api.giphy.com/v1/gifs/${mediaId}?api_key=${apiKey}`
+				`https://api.giphy.com/v1/gifs/${id}?api_key=${apiKey}`
 			).then(async (response: any) => {
 				await response.json().then((data: any) => {
 					response = data;

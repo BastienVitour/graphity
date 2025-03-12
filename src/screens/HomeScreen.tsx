@@ -4,7 +4,8 @@ import {
 	FlatList,
 	ActivityIndicator,
 	RefreshControl,
-	Text
+	Text,
+	TouchableOpacity
 } from "react-native";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
@@ -13,6 +14,7 @@ import MediaItem from "../components/MediaItem";
 import SearchBar from "../components/SearchBar";
 import FilterButtons from "../components/FilterButtons";
 import EmptyState from "../components/EmptyState";
+import { router } from "expo-router";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 const TRENDING_GIFS = "https://api.giphy.com/v1/gifs/trending";
@@ -64,6 +66,7 @@ const HomeScreen = () => {
 
 				const combinedMedia = [];
 				for (const response of responses) {
+					console.log(response);
 					const formattedMedia = response.data.data.map(
 						(item: any) => ({
 							...item,
@@ -162,7 +165,16 @@ const HomeScreen = () => {
 
 			<FlatList
 				data={media}
-				renderItem={({ item }) => <MediaItem item={item} />}
+				renderItem={({ item }) => (
+					<TouchableOpacity
+						onPress={() => {
+							router.navigate(
+								`/media?id=${item.id}&apiKey=${API_KEY}`
+							);
+						}}>
+						<MediaItem item={item} />
+					</TouchableOpacity>
+				)}
 				keyExtractor={(item, index) => `${item.id}-${index}`}
 				onEndReached={loadMoreData}
 				onEndReachedThreshold={0.3}
