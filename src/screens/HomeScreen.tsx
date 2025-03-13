@@ -4,7 +4,8 @@ import {
 	FlatList,
 	ActivityIndicator,
 	RefreshControl,
-	Text
+	Text,
+	TouchableOpacity
 } from "react-native";
 import axios from "axios";
 import { useDebounce } from "use-debounce";

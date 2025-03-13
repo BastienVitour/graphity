@@ -51,6 +51,16 @@ export default function AppLayout() {
 					)
 				}}
 			/>
+			<Tabs.Screen
+				name="logout"
+				options={{
+					title: "Déconnexion",
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<FontAwesome name="sign-out" size={20} color={color} />
+					)
+				}}
+			/>
 		</Tabs>
 	);
 }

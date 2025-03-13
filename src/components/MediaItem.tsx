@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
-import { WebView } from "react-native-webview";
+import { Image } from "expo-image";
 import mediaItemStyles from "../styles/MediaItemStyle";
 import { FontAwesome } from "@expo/vector-icons";
 import { GetItemAsync, SetItemAsync } from "@/src/utils/AsyncStorageService";
+import { router } from "expo-router";
 
 interface MediaItemProps {
 	item: {
@@ -75,41 +76,16 @@ const MediaItem = ({ item }: MediaItemProps) => {
 					/>
 				</TouchableOpacity>
 			</View>
-			<WebView
-				source={{
-					html: `
-            <html>
-              <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <style>
-                  body {
-                    margin: 0;
-                    padding: 0;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 100%;
-                    background-color: transparent;
-                  }
-                  img {
-                    max-width: 100%;
-                    max-height: 100%;
-                    object-fit: contain;
-                  }
-                </style>
-              </head>
-              <body>
-                <img src="${item.gifUrl}" />
-              </body>
-            </html>
-          `
-				}}
-				style={mediaItemStyles.mediaImage}
-				scrollEnabled={false}
-				showsHorizontalScrollIndicator={false}
-				showsVerticalScrollIndicator={false}
-				bounces={false}
-			/>
+			<TouchableOpacity
+				onPress={() => {
+					router.navigate(`/media?id=${item.id}`);
+				}}>
+				<Image
+					source={{ uri: item.gifUrl }}
+					style={mediaItemStyles.mediaImage}
+					autoplay
+				/>
+			</TouchableOpacity>
 			<Text style={mediaItemStyles.mediaFooter}>
 				Par {item.username ? `@${item.username}` : "Anonyme"}
 			</Text>
