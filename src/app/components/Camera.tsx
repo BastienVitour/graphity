@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, View, StyleSheet, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av";
-import React = require("react");
 
 export default function Camera({
 	onVideoCaptured

@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Video } from "expo-av";
 import { useNavigation } from "@react-navigation/native";
-import React = require("react");
 
 export default function ListMediaPerso({
 	image,

@@ -1,9 +1,8 @@
 import { View, StyleSheet } from "react-native";
-import { useState } from "react";
+import React, { useState } from "react";
 import ImagePickerExample from "../components/ImagePicker";
 import Camera from "../components/Camera";
 import ListMediaPerso from "../components/ListMediaPerso";
-import React = require("react");
 
 export default function Perso() {
 	const [image, setImage] = useState<string | null>(null);
