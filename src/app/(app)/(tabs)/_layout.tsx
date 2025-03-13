@@ -1,6 +1,7 @@
 import { Redirect, Tabs } from "expo-router";
 
 import useSessionStore from "@/src/zustand/sessionStore";
+import { FontAwesome } from "@expo/vector-icons";
 
 export default function AppLayout() {
 	const isLoggedIn = useSessionStore((state) => state.isLoggedIn);
@@ -14,5 +15,28 @@ export default function AppLayout() {
 	}
 
 	// This layout can be deferred because it's not the root layout.
-	return <Tabs />;
+	return (
+		<Tabs>
+			<Tabs.Screen
+				name="index"
+				options={{
+					title: "Accueil",
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<FontAwesome name="home" size={20} color={color} />
+					)
+				}}
+			/>
+			<Tabs.Screen
+				name="favorites"
+				options={{
+					title: "Favoris",
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<FontAwesome name="star" size={20} color={color} />
+					)
+				}}
+			/>
+		</Tabs>
+	);
 }

@@ -35,10 +35,11 @@ interface Media {
 	alt_text: string;
 }
 
+const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
+
 export default function MediaScreen() {
-	const { id, apiKey } = useLocalSearchParams<{
+	const { id } = useLocalSearchParams<{
 		id: string;
-		apiKey: string;
 	}>();
 
 	const [modalVisible, setModalVisible] = useState(false);
@@ -49,7 +50,7 @@ export default function MediaScreen() {
 		(async () => {
 			let response: any;
 			await fetch(
-				`https://api.giphy.com/v1/gifs/${id}?api_key=${apiKey}`
+				`https://api.giphy.com/v1/gifs/${id}?api_key=${API_KEY}`
 			).then(async (response: any) => {
 				await response.json().then((data: any) => {
 					response = data;

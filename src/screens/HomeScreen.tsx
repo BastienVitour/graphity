@@ -14,7 +14,9 @@ import MediaItem from "../components/MediaItem";
 import SearchBar from "../components/SearchBar";
 import FilterButtons from "../components/FilterButtons";
 import EmptyState from "../components/EmptyState";
-import { router } from "expo-router";
+import useSessionStore from "@/src/zustand/sessionStore";
+import { GetItemAsync } from "@/src/utils/AsyncStorageService";
+import { useIsFocused } from "@react-navigation/native";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 const TRENDING_GIFS = "https://api.giphy.com/v1/gifs/trending";
@@ -34,6 +36,9 @@ const HomeScreen = () => {
 		"all"
 	);
 	const [offset, setOffset] = useState<number>(0);
+	const [favorites, setFavorites] = useState<string[]>([]);
+	const currentUser = useSessionStore((state) => state.user);
+	const isFocused = useIsFocused();
 
 	const fetchMedia = async (
 		query: string = "",
@@ -70,7 +75,9 @@ const HomeScreen = () => {
 					const formattedMedia = response.data.data.map(
 						(item: any) => ({
 							...item,
-							gifUrl: item.images.original.url
+							gifUrl: item.images.original.url,
+							isFavorite: favorites.includes(item.id),
+							currentUserId: currentUser.id
 						})
 					);
 					combinedMedia.push(...formattedMedia);
@@ -125,19 +132,37 @@ const HomeScreen = () => {
 		}
 	};
 
+	const fetchFavorites = async () => {
+		try {
+			const results: any[] | null = await GetItemAsync("favorites");
+			if (results !== null && results.length > 0) {
+				setFavorites(
+					results
+						.filter((item: any) => item.userId === currentUser.id)
+						.map((item: any) => item.mediaId)
+				);
+			}
+		} catch (error) {}
+	};
+
 	useEffect(() => {
-		setMedia([]);
-		setOffset(0);
-		fetchMedia(debouncedSearchQuery, true);
-	}, [debouncedSearchQuery, mediaType]);
+		if (isFocused) {
+			setMedia([]);
+			setOffset(0);
+			fetchFavorites();
+			fetchMedia(debouncedSearchQuery, true);
+		}
+	}, [debouncedSearchQuery, mediaType, isFocused]);
 
 	const handleRefresh = () => {
 		setRefreshing(true);
+		fetchFavorites();
 		fetchMedia(debouncedSearchQuery, true);
 	};
 
 	const loadMoreData = () => {
 		if (!loading) {
+			fetchFavorites();
 			fetchMedia(debouncedSearchQuery);
 		}
 	};
@@ -165,16 +190,7 @@ const HomeScreen = () => {
 
 			<FlatList
 				data={media}
-				renderItem={({ item }) => (
-					<TouchableOpacity
-						onPress={() => {
-							router.navigate(
-								`/media?id=${item.id}&apiKey=${API_KEY}`
-							);
-						}}>
-						<MediaItem item={item} />
-					</TouchableOpacity>
-				)}
+				renderItem={({ item }) => <MediaItem item={item} />}
 				keyExtractor={(item, index) => `${item.id}-${index}`}
 				onEndReached={loadMoreData}
 				onEndReachedThreshold={0.3}
