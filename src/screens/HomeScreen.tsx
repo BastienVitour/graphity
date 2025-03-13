@@ -15,6 +15,7 @@ import FilterButtons from "../components/FilterButtons";
 import EmptyState from "../components/EmptyState";
 import useSessionStore from "@/src/zustand/sessionStore";
 import { GetItemAsync } from "@/src/utils/AsyncStorageService";
+import { useIsFocused } from "@react-navigation/native";
 
 const API_KEY = process.env.EXPO_PUBLIC_API_KEY;
 const TRENDING_GIFS = "https://api.giphy.com/v1/gifs/trending";
@@ -36,6 +37,7 @@ const HomeScreen = () => {
 	const [offset, setOffset] = useState<number>(0);
 	const [favorites, setFavorites] = useState<string[]>([]);
 	const currentUser = useSessionStore((state) => state.user);
+	const isFocused = useIsFocused();
 
 	const fetchMedia = async (
 		query: string = "",
@@ -142,11 +144,13 @@ const HomeScreen = () => {
 	};
 
 	useEffect(() => {
-		setMedia([]);
-		setOffset(0);
-		fetchFavorites();
-		fetchMedia(debouncedSearchQuery, true);
-	}, [debouncedSearchQuery, mediaType]);
+		if (isFocused) {
+			setMedia([]);
+			setOffset(0);
+			fetchFavorites();
+			fetchMedia(debouncedSearchQuery, true);
+		}
+	}, [debouncedSearchQuery, mediaType, isFocused]);
 
 	const handleRefresh = () => {
 		setRefreshing(true);
