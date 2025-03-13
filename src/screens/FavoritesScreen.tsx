@@ -36,8 +36,15 @@ export default function FavoritesScreen() {
 	};
 
 	return (
-		<SafeAreaView>
-			<Text>Mes favoris</Text>
+		<SafeAreaView style={{ margin: 10 }}>
+			<Text
+				style={{
+					fontWeight: "bold",
+					fontSize: 20,
+					textAlign: "center"
+				}}>
+				Mes favoris
+			</Text>
 			{media && (
 				<FlatList
 					data={media}

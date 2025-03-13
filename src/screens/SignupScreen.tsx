@@ -1,11 +1,12 @@
 import { Button, SafeAreaView, Text, TextInput } from "react-native";
 import { useState } from "react";
 
-import styles from "../styles/SignupStyle";
+import styles from "../styles/AuthStyle";
 import { Link, router } from "expo-router";
 import RegisterUser from "@/src/services/SignupService";
 import UserSignup from "@/src/models/UserSignup";
 import useSessionStore from "@/src/zustand/sessionStore";
+import { Snackbar } from "react-native-paper";
 
 export default function SignupScreen() {
 	const [username, setUsername] = useState<string>("");
@@ -15,6 +16,7 @@ export default function SignupScreen() {
 	const [passwordError, setPasswordError] = useState<boolean>(false);
 	const [confirmPasswordError, setConfirmPasswordError] =
 		useState<boolean>(false);
+	const [error, setError] = useState<string>("");
 
 	const signIn = useSessionStore((state) => state.signIn);
 
@@ -26,7 +28,7 @@ export default function SignupScreen() {
 		};
 		const { success, message, element, user } =
 			await RegisterUser(userToInsert);
-		alert(message);
+		setError(message);
 		if (success) {
 			setUsernameError(false);
 			setPasswordError(false);
@@ -44,7 +46,7 @@ export default function SignupScreen() {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<Text style={styles.title}>Signup</Text>
+			<Text style={styles.title}>INSCRIPTION</Text>
 			<TextInput
 				style={{
 					...styles.input,
@@ -72,7 +74,15 @@ export default function SignupScreen() {
 				secureTextEntry
 			/>
 			<Button title={"S'inscrire"} onPress={handleSubmit} />
-			<Link href={"/login"}>Se connecter</Link>
+			<Text>
+				Vous avez déjà un compte ? &nbsp;
+				<Link href={"/login"} style={styles.link}>
+					Se connecter
+				</Link>
+			</Text>
+			<Snackbar visible={error.length > 0} onDismiss={() => setError("")}>
+				{error}
+			</Snackbar>
 		</SafeAreaView>
 	);
 }

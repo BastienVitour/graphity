@@ -16,15 +16,15 @@ const LoginUser = async ({
 			password === "" ||
 			username === ""
 		) {
-			return { status: false };
+			return { status: false, data: "Veuillez remplir tous les champs" };
 		}
 
 		const users: User[] | null = await GetItemAsync("users");
 		if (users === null || users === undefined || users.length === 0) {
-			return { status: false };
+			return { status: false, data: "Utilisateur inexistant" };
 		}
 		const user = users.find((u) => u.username === username);
-		if (!user) return { status: false };
+		if (!user) return { status: false, data: "Utilisateur inexistant" };
 		const encryptedPassword = await Crypto.digestStringAsync(
 			Crypto.CryptoDigestAlgorithm.SHA256,
 			password
@@ -32,10 +32,10 @@ const LoginUser = async ({
 		if (user.password === encryptedPassword) {
 			return { status: true, data: { id: user.id, username: username } };
 		} else {
-			return { status: false };
+			return { status: false, data: "Mot de passe incorrect" };
 		}
 	} catch (error) {
-		return { status: false };
+		return { status: false, data: "La connexion a échoué" };
 	}
 };
 
