@@ -37,6 +37,20 @@ export default function AppLayout() {
 					)
 				}}
 			/>
+			<Tabs.Screen
+				name="readme"
+				options={{
+					title: "Readme",
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<FontAwesome
+							name="newspaper-o"
+							size={20}
+							color={color}
+						/>
+					)
+				}}
+			/>
 		</Tabs>
 	);
 }
