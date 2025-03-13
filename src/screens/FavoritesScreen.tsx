@@ -4,11 +4,13 @@ import EmptyState from "@/src/components/EmptyState";
 import useSessionStore from "@/src/zustand/sessionStore";
 import fetchMedias from "@/src/services/FavoritesService";
 import MediaItem from "@/src/components/MediaItem";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function FavoritesScreen() {
 	const [media, setMedia] = useState<any[]>([]);
 	const [refreshing, setRefreshing] = useState<boolean>(false);
 	const currentUser = useSessionStore((state) => state.user);
+	const isFocused = useIsFocused();
 
 	const fetchFavorites = async () => {
 		try {
@@ -23,8 +25,10 @@ export default function FavoritesScreen() {
 	};
 
 	useEffect(() => {
-		fetchFavorites();
-	}, []);
+		if (isFocused) {
+			fetchFavorites();
+		}
+	}, [isFocused]);
 
 	const handleRefresh = () => {
 		setRefreshing(true);
