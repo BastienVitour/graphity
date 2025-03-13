@@ -71,7 +71,6 @@ const HomeScreen = () => {
 
 				const combinedMedia = [];
 				for (const response of responses) {
-					console.log(response);
 					const formattedMedia = response.data.data.map(
 						(item: any) => ({
 							...item,
