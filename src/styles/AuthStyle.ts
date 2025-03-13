@@ -3,19 +3,25 @@ import { StyleSheet } from "react-native";
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		margin: 10,
-		width: "100%",
+		margin: 15,
 		textAlign: "center",
+		justifyContent: "center",
 		gap: 10
 	},
 	title: {
-		fontWeight: "bold"
+		fontWeight: "bold",
+		textAlign: "center",
+		fontSize: 25
 	},
 	input: {
 		borderWidth: 1,
 		borderRadius: 5,
 		width: "100%",
 		borderColor: "gray"
+	},
+	link: {
+		color: "#1b41b3",
+		textDecorationLine: "underline"
 	}
 });
 
