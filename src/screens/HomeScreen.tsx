@@ -4,7 +4,8 @@ import {
 	FlatList,
 	ActivityIndicator,
 	RefreshControl,
-	Text
+	Text,
+	TouchableOpacity
 } from "react-native";
 import axios from "axios";
 import { useDebounce } from "use-debounce";
@@ -70,6 +71,7 @@ const HomeScreen = () => {
 
 				const combinedMedia = [];
 				for (const response of responses) {
+					console.log(response);
 					const formattedMedia = response.data.data.map(
 						(item: any) => ({
 							...item,
