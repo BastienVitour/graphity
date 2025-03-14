@@ -14,6 +14,10 @@ const mediaItemStyles = StyleSheet.create({
 		shadowRadius: 3,
 		elevation: 3
 	},
+	mediaHeader: {
+		flexDirection: "row",
+		justifyContent: "space-between"
+	},
 	mediaTitle: {
 		fontSize: 16,
 		fontWeight: "500",
