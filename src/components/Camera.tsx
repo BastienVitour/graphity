@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, View, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Video } from "expo-av";
-import styles from "../styles/CameraStyles"; // Import the styles
+import styles from "../styles/CameraStyles";
 
 export default function Camera({
 	onMediaCaptured
