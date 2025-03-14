@@ -4,7 +4,7 @@ import ImagePickerExample from "../components/ImagePicker";
 import Camera from "../components/Camera";
 import ListMediaPerso from "../components/ListMediaPerso";
 
-export default function Perso() {
+export default function UploadScreen() {
 	const [image, setImage] = useState<string | null>(null);
 	const [video, setVideo] = useState<string | null>(null);
 

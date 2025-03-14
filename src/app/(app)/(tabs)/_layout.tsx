@@ -52,6 +52,16 @@ export default function AppLayout() {
 				}}
 			/>
 			<Tabs.Screen
+				name="upload"
+				options={{
+					title: "Upload",
+					headerShown: false,
+					tabBarIcon: ({ color }) => (
+						<FontAwesome name="upload" size={20} color={color} />
+					)
+				}}
+			/>
+			<Tabs.Screen
 				name="logout"
 				options={{
 					title: "Déconnexion",
