@@ -7,14 +7,23 @@ import ListMediaPerso from "../components/ListMediaPerso";
 export default function Perso() {
 	const [image, setImage] = useState<string | null>(null);
 	const [video, setVideo] = useState<string | null>(null);
+
+	const handleMediaCaptured = (uri: string, type: "image" | "video") => {
+		if (type === "image") {
+			setImage(uri);
+		} else {
+			setVideo(uri);
+		}
+	};
+
 	return (
 		<View style={styles.container}>
 			<View style={styles.buttons}>
-				<ImagePickerExample onImageCaptured={setImage} />
-				<Camera onVideoCaptured={setVideo} />
+				<ImagePickerExample onMediaCaptured={handleMediaCaptured} />
+				<Camera onMediaCaptured={handleMediaCaptured} />
 			</View>
 
-			<View style={styles.media}>
+			<View style={styles.mediaContainer}>
 				<ListMediaPerso image={image} video={video} />
 			</View>
 		</View>
@@ -23,16 +32,19 @@ export default function Perso() {
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		flexDirection: "column"
 	},
 	buttons: {
 		marginTop: 20,
 		flexDirection: "row",
 		width: "100%",
-		justifyContent: "space-evenly"
+		justifyContent: "space-evenly",
+		paddingHorizontal: 10
 	},
-	media: {
+	mediaContainer: {
+		flex: 1,
 		width: "100%",
-		height: 200
+		marginTop: 10
 	}
 });
