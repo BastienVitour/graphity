@@ -5,7 +5,7 @@ const { width } = Dimensions.get("window");
 const mediaItemStyles = StyleSheet.create({
 	mediaContainer: {
 		margin: 10,
-		backgroundColor: "white",
+		backgroundColor: "#8443ca",
 		borderRadius: 10,
 		padding: 10,
 		shadowColor: "#000",
@@ -21,7 +21,8 @@ const mediaItemStyles = StyleSheet.create({
 	mediaTitle: {
 		fontSize: 16,
 		fontWeight: "500",
-		marginBottom: 8
+		marginBottom: 8,
+		color: "#fff"
 	},
 	mediaImage: {
 		width: width - 40,
@@ -31,7 +32,7 @@ const mediaItemStyles = StyleSheet.create({
 	mediaFooter: {
 		marginTop: 8,
 		fontSize: 14,
-		color: "#555"
+		color: "#fff"
 	}
 });
 

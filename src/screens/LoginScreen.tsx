@@ -31,16 +31,22 @@ export default function SignIn() {
 			<TextInput
 				style={styles.input}
 				placeholder={"Pseudo"}
+				placeholderTextColor="#fff"
 				onChangeText={setUsername}
 			/>
 			<TextInput
 				style={styles.input}
 				placeholder={"Mot de passe"}
+				placeholderTextColor="#fff"
 				onChangeText={setPassword}
 				secureTextEntry
 			/>
-			<Button title={"Se connecter"} onPress={handleSubmit} />
-			<Text>
+			<Button
+				title={"Se connecter"}
+				onPress={handleSubmit}
+				style={styles.login}
+			/>
+			<Text style={styles.Textlink}>
 				Pas encore de compte ? &nbsp;
 				<Link href={"/signup"} style={styles.link}>
 					S'inscrire

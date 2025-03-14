@@ -53,6 +53,7 @@ export default function SignupScreen() {
 					borderColor: usernameError ? "red" : "grey"
 				}}
 				placeholder={"Pseudo"}
+				placeholderTextColor="#fff"
 				onChangeText={setUsername}
 			/>
 			<TextInput
@@ -61,6 +62,7 @@ export default function SignupScreen() {
 					borderColor: passwordError ? "red" : "grey"
 				}}
 				placeholder={"Mot de passe"}
+				placeholderTextColor="#fff"
 				onChangeText={setPassword}
 				secureTextEntry
 			/>
@@ -70,11 +72,12 @@ export default function SignupScreen() {
 					borderColor: confirmPasswordError ? "red" : "grey"
 				}}
 				placeholder={"Confirmer le mot de passe"}
+				placeholderTextColor="#fff"
 				onChangeText={setConfirmPassword}
 				secureTextEntry
 			/>
 			<Button title={"S'inscrire"} onPress={handleSubmit} />
-			<Text>
+			<Text style={styles.Textlink}>
 				Vous avez déjà un compte ? &nbsp;
 				<Link href={"/login"} style={styles.link}>
 					Se connecter
