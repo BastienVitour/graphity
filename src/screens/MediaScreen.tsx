@@ -91,46 +91,51 @@ export default function MediaScreen() {
 					flex: 1
 				}}>
 				{media ? (
-					<View
-						style={{
-							flex: 1,
-							justifyContent: "space-around",
-							alignItems: "center",
-							marginLeft: 15,
-							marginRight: 15,
-							marginTop: 30,
-							marginBottom: 30
-						}}>
-						<Text>{media.title}</Text>
-						<Image
-							autoplay
-							style={{ width: 250, height: 250 }}
-							source={{
-								uri: media.original_image.url
-							}}
-						/>
-						<Text>{media.alt_text}</Text>
-						<Text>
-							Original post :{" "}
-							<Text
-								style={styles.url}
-								onPress={() => {
-									Linking.openURL(media.source_post_url);
-								}}>
-								{media.source_post_url}
+					<View style={styles.page}>
+						<View style={styles.top_container}>
+							<Text style={styles.title}>{media.title}</Text>
+							<View>
+								<Image
+									autoplay
+									style={{ width: 250, height: 250 }}
+									source={{
+										uri: media.original_image.url
+									}}
+								/>
+								<Text>Type : {media.type}</Text>
+							</View>
+							<Text style={styles.alt_text}>
+								{media.alt_text}
 							</Text>
-						</Text>
-						<Text>Uploaded on : {media.import_datetime}</Text>
-						<Text>Type : {media.type}</Text>
-						<Text>Rating : {media.rating}</Text>
-						<Button
-							title="More details"
-							color="#841584"
-							accessibilityLabel="See more informations about this media"
-							onPress={() => {
-								setModalVisible(true);
-							}}
-						/>
+						</View>
+						<View style={styles.bottom_container}>
+							<Text style={styles.alt_desc}>
+								Post Originel :{" "}
+								<Text
+									style={styles.url}
+									onPress={() => {
+										Linking.openURL(media.source_post_url);
+									}}>
+									{media.source_post_url}
+								</Text>
+							</Text>
+							{media.import_datetime !== "" && (
+								<Text style={styles.alt_desc}>
+									Date de publication :{" "}
+									{media.import_datetime}
+								</Text>
+							)}
+							<View style={styles.alt_button}>
+								<Button
+									title="Plus de détails"
+									color="#841584"
+									accessibilityLabel="See more informations about this media"
+									onPress={() => {
+										setModalVisible(true);
+									}}
+								/>
+							</View>
+						</View>
 						<Modal
 							animationType="slide"
 							transparent={true}
@@ -140,25 +145,39 @@ export default function MediaScreen() {
 								setModalVisible(!modalVisible);
 							}}>
 							<View style={styles.centeredView}>
-								<View style={styles.modalView}>
-									<Text>Title : {media.title}</Text>
-									<Text>Type : {media.type}</Text>
-									<Text>ID : {media.id}</Text>
-									<Text>
+								<View style={[styles.modalView]}>
+									<Text style={styles.desc_text}>
+										Titre : {media.title}
+									</Text>
+									<Text style={styles.desc_text}>
+										Type : {media.type}
+									</Text>
+									<Text style={styles.desc_text}>
+										ID : {media.id}
+									</Text>
+									<Text style={styles.desc_text}>
 										URL :{" "}
 										<Text
-											style={styles.url}
+											style={[
+												styles.url,
+												styles.desc_text
+											]}
 											onPress={() => {
 												Linking.openURL(media.url);
 											}}>
 											{media.url}
 										</Text>
 									</Text>
-									<Text>Slug : {media.slug}</Text>
-									<Text>
+									<Text style={styles.desc_text}>
+										Slug : {media.slug}
+									</Text>
+									<Text style={styles.desc_text}>
 										Bitly GIF URL :{" "}
 										<Text
-											style={styles.url}
+											style={[
+												styles.url,
+												styles.desc_text
+											]}
 											onPress={() => {
 												Linking.openURL(
 													media.bitly_gif_url
@@ -167,7 +186,7 @@ export default function MediaScreen() {
 											{media.bitly_gif_url}
 										</Text>
 									</Text>
-									<Text>
+									<Text style={styles.desc_text}>
 										Bitly URL :{" "}
 										<Text
 											style={styles.url}
@@ -179,10 +198,13 @@ export default function MediaScreen() {
 											{media.bitly_url}
 										</Text>
 									</Text>
-									<Text>
+									<Text style={styles.desc_text}>
 										Embed URL :{" "}
 										<Text
-											style={styles.url}
+											style={[
+												styles.url,
+												styles.desc_text
+											]}
 											onPress={() => {
 												Linking.openURL(
 													media.embed_url
@@ -191,19 +213,26 @@ export default function MediaScreen() {
 											{media.embed_url}
 										</Text>
 									</Text>
-									<Text>Username : {media.username}</Text>
-									<Text>
+									<Text style={styles.desc_text}>
+										Utilisateur : {media.username}
+									</Text>
+									<Text style={styles.desc_text}>
 										Source :{" "}
 										<Text
-											style={styles.url}
+											style={[
+												styles.url,
+												styles.desc_text
+											]}
 											onPress={() => {
 												Linking.openURL(media.source);
 											}}>
 											{media.source}
 										</Text>
 									</Text>
-									<Text>Rating : {media.rating}</Text>
-									<Text>
+									<Text style={styles.desc_text}>
+										Rating : {media.rating}
+									</Text>
+									<Text style={styles.desc_text}>
 										Content URL :{" "}
 										<Text
 											style={styles.url}
@@ -215,12 +244,17 @@ export default function MediaScreen() {
 											{media.bitly_url}
 										</Text>
 									</Text>
-									<Text>Source tld : {media.source_tld}</Text>
+									<Text style={styles.desc_text}>
+										Source tld : {media.source_tld}
+									</Text>
 									<Text>
 										{" "}
-										Source post URL :{" "}
+										URL Source :{" "}
 										<Text
-											style={styles.url}
+											style={[
+												styles.url,
+												styles.desc_text
+											]}
 											onPress={() => {
 												Linking.openURL(
 													media.source_post_url
@@ -229,15 +263,14 @@ export default function MediaScreen() {
 											{media.source_post_url}
 										</Text>
 									</Text>
-									<Text>
-										Is a sticker : {media.is_sticker}
+									<Text style={styles.desc_text}>
+										Sticker : {media.is_sticker}
 									</Text>
-									<Text>
-										Import date & time :{" "}
-										{media.import_datetime}
+									<Text style={styles.desc_text}>
+										Date d'import : {media.import_datetime}
 									</Text>
-									<Text>
-										Trending date & time :{" "}
+									<Text style={styles.desc_text}>
+										Date de trending :{" "}
 										{media.trending_datetime}
 									</Text>
 
