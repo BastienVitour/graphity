@@ -5,7 +5,7 @@ import Camera from "../components/Camera";
 import ListMediaPerso from "../components/ListMediaPerso";
 import styles from "../styles/PersoStyle";
 
-export default function Perso() {
+export default function UploadScreen() {
 	const [image, setImage] = useState<string | null>(null);
 	const [video, setVideo] = useState<string | null>(null);
 

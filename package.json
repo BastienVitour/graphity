@@ -20,7 +20,6 @@
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^7.2.0",
     "@react-navigation/native": "^7.0.14",
-    "@terrylinla/react-native-sketch-canvas": "^0.8.0",
     "axios": "^1.8.3",
     "expo": "~52.0.37",
     "expo-av": "~15.0.2",
