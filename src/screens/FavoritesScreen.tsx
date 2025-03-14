@@ -5,6 +5,7 @@ import useSessionStore from "@/src/zustand/sessionStore";
 import fetchMedias from "@/src/services/FavoritesService";
 import MediaItem from "@/src/components/MediaItem";
 import { useIsFocused } from "@react-navigation/native";
+import styles from "../styles/FavStyle";
 
 export default function FavoritesScreen() {
 	const [media, setMedia] = useState<any[]>([]);
@@ -36,15 +37,8 @@ export default function FavoritesScreen() {
 	};
 
 	return (
-		<SafeAreaView style={{ margin: 10 }}>
-			<Text
-				style={{
-					fontWeight: "bold",
-					fontSize: 20,
-					textAlign: "center"
-				}}>
-				Mes favoris
-			</Text>
+		<SafeAreaView style={styles.container}>
+			<Text style={styles.title}>Mes favoris</Text>
 			{media && (
 				<FlatList
 					data={media}

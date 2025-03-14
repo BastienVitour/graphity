@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import ImagePickerExample from "../components/ImagePicker";
 import Camera from "../components/Camera";
 import ListMediaPerso from "../components/ListMediaPerso";
+import styles from "../styles/PersoStyle";
 
 export default function UploadScreen() {
 	const [image, setImage] = useState<string | null>(null);
@@ -29,22 +30,3 @@ export default function UploadScreen() {
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		flexDirection: "column"
-	},
-	buttons: {
-		marginTop: 20,
-		flexDirection: "row",
-		width: "100%",
-		justifyContent: "space-evenly",
-		paddingHorizontal: 10
-	},
-	mediaContainer: {
-		flex: 1,
-		width: "100%",
-		marginTop: 10
-	}
-});

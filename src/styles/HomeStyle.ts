@@ -5,7 +5,7 @@ const { width } = Dimensions.get("window");
 const homeStyles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#f5f5f5"
+		backgroundColor: "#4b0f93"
 	},
 	mediaContainer: {
 		margin: 10,

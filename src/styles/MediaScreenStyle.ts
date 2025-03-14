@@ -5,10 +5,11 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "space-around",
 		alignItems: "center",
-		marginLeft: 15,
-		marginRight: 15,
-		marginTop: 30,
-		marginBottom: 30
+		paddingLeft: 15,
+		paddingRight: 15,
+		paddingTop: 30,
+		paddingBottom: 30,
+		backgroundColor: "#4b0f93"
 	},
 	centeredView: {
 		flex: 1,
@@ -43,10 +44,12 @@ const styles = StyleSheet.create({
 	title: {
 		fontWeight: "bold",
 		textAlign: "center",
-		fontSize: 25
+		fontSize: 25,
+		color: "#ffffff"
 	},
 	alt_text: {
-		fontSize: 17
+		fontSize: 17,
+		color: "#ffffff"
 	},
 
 	button: {
@@ -71,9 +74,13 @@ const styles = StyleSheet.create({
 		textAlign: "center"
 	},
 	url: { color: "blue" },
+	type: {
+		color: "#fff"
+	},
 	alt_desc: {
 		fontStyle: "italic",
-		margin: 5
+		margin: 5,
+		color: "#ffffff"
 	},
 	alt_button: { margin: 15 },
 	desc_text: { fontSize: 20 }
