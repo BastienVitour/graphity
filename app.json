@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "graphity",
+    "name": "Graphity",
     "slug": "graphity",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,10 +14,11 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/images/adaptive-icon.png",
+        "foregroundImage": "./src/assets/images/icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.graphity"
+      "package": "com.anonymous.graphity",
+      "icon": "./src/assets/images/icon.png"
     },
     "web": {
       "bundler": "metro",
