@@ -102,7 +102,9 @@ export default function MediaScreen() {
 										uri: media.original_image.url
 									}}
 								/>
-								<Text>Type : {media.type}</Text>
+								<Text style={styles.type}>
+									Type : {media.type}
+								</Text>
 							</View>
 							<Text style={styles.alt_text}>
 								{media.alt_text}
