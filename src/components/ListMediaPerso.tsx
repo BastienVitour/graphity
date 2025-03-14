@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import {
-	Image,
 	View,
 	FlatList,
 	TouchableOpacity,
@@ -10,10 +9,13 @@ import {
 	PanResponder,
 	Animated
 } from "react-native";
+import { Image } from "expo-image";
 import { Video } from "expo-av";
 import { GetItemAsync, SetItemAsync } from "../utils/AsyncStorageService";
 import TextOverlay from "./TextOverlay";
 import styles from "../styles/ListMediaPersoStyles";
+import * as FileSystem from "expo-file-system";
+import axios from "axios";
 
 const MEDIA_STORAGE_KEY = "user_media_collection";
 
@@ -94,6 +96,39 @@ export default function ListMediaPerso({
 			pan.setValue({ x: 0, y: 0 });
 		}
 	});
+
+	const uploadToGiphy = async () => {
+		//check the api key
+		if (selectedMedia && process.env.EXPO_PUBLIC_API_KEY) {
+			let file;
+			// read the file
+			await FileSystem.readAsStringAsync(selectedMedia.uri).then(
+				(result: any) => {
+					file = result;
+				}
+			);
+			if (file) {
+				let formData = new FormData();
+				// formData.append("api_key", process.env.EXPO_PUBLIC_API_KEY);
+				formData.append("file", new Blob([file]));
+				await axios
+					.post(
+						`${process.env.EXPO_PUBLIC_GIPHY_UPLOAD_URL}`,
+						formData,
+						{
+							headers: { "Content-Type": "multipart/form-data" }
+						}
+					)
+					.then(async (response: any) => {
+						await response.json();
+						console.log(response);
+					})
+					.catch((error) => {
+						console.error("Error uploading file:", error);
+					});
+			}
+		}
+	};
 
 	const saveTextToMedia = async () => {
 		if (!selectedMedia) return;
@@ -185,6 +220,11 @@ export default function ListMediaPerso({
 						<TouchableOpacity onPress={saveTextToMedia}>
 							<Text style={styles.saveButton}>Enregistrer</Text>
 						</TouchableOpacity>
+						{/* <TouchableOpacity onPress={uploadToGiphy}>
+							<Text style={styles.saveButton}>
+								Envoyer sur Giphy
+							</Text>
+						</TouchableOpacity> */}
 					</View>
 
 					<View style={styles.mediaViewContainer}>
@@ -201,6 +241,7 @@ export default function ListMediaPerso({
 								source={{ uri: selectedMedia?.uri }}
 								style={styles.fullMedia}
 								resizeMode="contain"
+								autoplay
 							/>
 						)}
 
