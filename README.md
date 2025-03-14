@@ -1,50 +1,48 @@
-# Welcome to your Expo app 👋
+# <p align="center">Projet Graphity</p>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Groupe 4
 
-## Get started
+- BOISSY Adam : Liste des gifs, filtres et recherche
+- QUATRAVAUX Julien : Upload de gifs
+- VITOUR Bastien : Inscription / connexion, système de favoris
+- XIONG Lenny : Détail d'un gif
 
-1. Install dependencies
+## Description
 
-   ```bash
-   npm install
-   ```
+Ce projet utilise l'[api de Giphy](https://developers.giphy.com/docs/api/#quick-start-guide) pour lister, uploader et mettre en favoris des gifs
 
-2. Start the app
+## Fonctionnalités
 
-   ```bash
-    npx expo start
-   ```
+- Inscription
+  - Vérification de la validité du pseudo (pseudo unique)
+  - Vérification du mot de passe
+    - Mot de passe supérieur à 8 caractères
+    - Mot de passe et confirmation identiques
+    - Hashage du mot de passe
+  - Insertion de l'utilisateur dans l'AsyncStorage
 
-In the output, you'll find options to open the app in a
+- Connexion
+  - Vérification des informations (pseudo et mdp)
+  - Mise à jour de la session en cours
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Page d'accueil
+  - Liste des médias disponibles (médias récents / trending en priorité)
+  - Filtre des médias par type (gifs / stickers)
+  - Recherche de médias
+  - Ajout d'un média en favori
+  
+- Page de détails
+  - Liste de détails sur le média sélectionné
+    - Description
+    - Date d'upload
+    - Classification
+    - Type
+    - Détails supplémentaires (id, source...)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- Page de favoris
+  - Récupération des médias ajoutés en favori par l'utilisateur actuel
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- Page d'upload
+  - Accès à la caméra de l'utilisateur
+  - Accès à la galerie de l'utilisateur
+  - Upload d'une vidéo sur l'api Giphy
