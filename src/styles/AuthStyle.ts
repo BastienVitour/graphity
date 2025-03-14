@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderRadius: 5,
 		width: "100%",
-		borderColor: "gray"
+		borderColor: "gray",
+		height: 40
 	},
 	link: {
 		color: "#1b41b3",
